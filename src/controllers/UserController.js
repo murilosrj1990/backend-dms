@@ -6,17 +6,17 @@ const authConfig = require('../config/authConfig');
 module.exports = {
     async index(req,res){
         const users = await User.findAll({
-            attributes: ['name','email']
+            attributes: ['name','email','phone']
         });
 
         res.json(users);
     },
 
     async store(req,res){
-        const { name , email , password } = req.body;
+        const { name , email ,phone, password } = req.body;
 
         const passwordEncrypted = bcrypt.hashSync(password,10);
-        const user = await User.create({ name, email , password: passwordEncrypted });
+        const user = await User.create({ name, email, phone , password: passwordEncrypted });
         return res.json(user);
     },
 
