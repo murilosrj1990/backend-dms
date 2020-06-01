@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const authConfig = require('../config/secret.json')
+const authConfig = require('../config/authConfig')
 module.exports = (req , res, next)=>{
     const authHeader = req.headers.authorization;
 
@@ -18,6 +18,7 @@ module.exports = (req , res, next)=>{
         if(err) return res.status(401).send({error: 'Token ivalid'});
 
         req.userId= decoded.id;
+        return next();
     });
 
 
