@@ -5,10 +5,8 @@ const authConfig = require('../config/authConfig');
 
 module.exports = {
     async index(req,res){
-        const users = await User.findAll({
-            attributes: ['name','email','phone']
-        });
-
+        const users = await User.findAll({});
+        users.password=undefined;
         res.json(users);
     },
 
@@ -34,5 +32,16 @@ module.exports = {
             expiresIn: 86400
         })
         res.send({user,token});
+    },
+
+    async delete(req,res){
+        const { user_id } = req.params;
+        const deleted_lines_number = await User.destroy({where: {id: user_id}});
+        if (deleted_lines_number === 1){
+            return res.status(200).json({message: 'User deleted.'});
+        }else{
+            return res.status(404).json({message: 'User not found.'})
+        }
+        
     }
 }
