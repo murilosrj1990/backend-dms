@@ -15,6 +15,7 @@ class User extends Model {
     
     static associate(models){
         this.hasMany(models.Budget, {foreignKey: 'user_id', as: 'budgets'});
+        this.hasMany(models.Anamnesis, {foreignKey: 'user_id', as: 'anamnesis'});
     }
 
 }
