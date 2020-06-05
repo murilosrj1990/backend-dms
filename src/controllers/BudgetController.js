@@ -26,6 +26,16 @@ module.exports = {
         console.log(valid_at);
         const budget = await Budget.create({ valid_at , user_id});
         return res.json(budget);
+    },
+    async delete(req, res){
+        const { budget_id } = req.params;
+        if(!budget_id) return res.status(400).json({message: 'User ID not provided.'});
+        const budget = await Budget.findByPk(budget_id);
+        if (budget){
+            await budget.destroy();
+            return res.status(200).json({message: 'User deleted.'});
+        }else{
+            return res.status(404).json({message: 'User not found.'});
+        }
     }
-
 }

@@ -43,7 +43,7 @@ module.exports = {
 
     async delete(req,res){
         const { user_id } = req.params;
-        if(!user_id) return res.status(400).json({message: 'User ID not provided.'})
+        if(!user_id) return res.status(400).json({message: 'User ID not provided.'});
         const deleted_lines_number = await User.destroy({where: {id: user_id}});
         if (deleted_lines_number === 1){
             return res.status(200).json({message: 'User deleted.'});
@@ -51,5 +51,17 @@ module.exports = {
             return res.status(404).json({message: 'User not found.'});
         }
         
+    },
+    async edit(req,res){
+        const {user_id} = req.params;
+        if(!user_id) return res.status(400).json({message: 'User ID not provided.'});
+        const { name , phone , email } = req.body;
+        if( !name || !phone || !email ) return res.status(400).json({message: "User information missing."});
+        const user = await User.findByPk(user_id);
+        user.name = name;
+        user.email = email;
+        user.phone = phone;
+        await user.save();
+        return res.status(200).json({message: "User updated."});
     }
 }
