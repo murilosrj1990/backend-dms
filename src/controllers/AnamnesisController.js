@@ -3,13 +3,20 @@ const User = require('../models/User');
 
 
 module.exports = {
+    async get  (req,res){
+        const { anamnese_id } = req.params;
+        const anamnese = await Anamnesis.findByPk(anamnese_id);
+        res.status(200).json(anamnese);
+    },
     async index  (req,res){
         const { user_id } = req.params;
-        const user = await User.findByPk(user_id, {
-            include: 'anamnesis'
+        const anamnesis = await Anamnesis.findAndCountAll({
+            attributes: ['id', 'createdAt'], 
+            where: {user_id},
+            limit: 10,
+            offset: 0
         });
-        user.password = undefined;
-        res.status(200).json(user.anamnesis);
+        res.status(200).json(anamnesis);
     },
     async store(req,res){
         const { user_id } = req.params;
