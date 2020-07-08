@@ -26,7 +26,7 @@ routes.post('/budgets/:budget_id/procedures', ProcedureController.store);
 routes.get('/budgets/:budget_id/procedures', ProcedureController.index);
 
 routes.get('/users/:user_id/anamnesis', AnamnesisController.index);
-routes.get('/anamnese/:anamnese_id', AnamnesisController.get);
+routes.get('/anamnesis/:anamnesis_id', AnamnesisController.get);
 routes.post('/users/:user_id/anamnesis', AnamnesisController.store);
 routes.put('/anamnesis/:anamnesis_id', AnamnesisController.edit);
 

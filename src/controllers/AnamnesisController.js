@@ -4,8 +4,8 @@ const User = require('../models/User');
 
 module.exports = {
     async get  (req,res){
-        const { anamnese_id } = req.params;
-        const anamnese = await Anamnesis.findByPk(anamnese_id);
+        const { anamnesis_id } = req.params;
+        const anamnese = await Anamnesis.findByPk(anamnesis_id);
         res.status(200).json(anamnese);
     },
     async index  (req,res){
