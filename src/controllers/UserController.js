@@ -2,6 +2,10 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/authConfig');
+const {Storage} = require('@google-cloud/storage');
+
+const path = require('path')
+const serviceKey = path.join(__dirname, '../../google-storage-key.json');
 
 module.exports = {
     async index(req,res){
@@ -63,5 +67,43 @@ module.exports = {
         user.phone = phone;
         await user.save();
         return res.status(200).json({message: "User updated."});
+    },
+    async upload(req,res,next){
+
+        const { user_id } = req.params;
+        console.log(req.file);
+        const file = req.file;
+        const {buffer} = file;
+        
+        const gcs = new Storage({
+            projectId: 'ambient-climate-255916',
+            keyFilename: serviceKey
+        });
+        const bucket = gcs.bucket('profile-img-dms');
+
+
+
+        new Promise((resolve, reject) => {
+            
+          
+            const blob = bucket.file('profile-'+user_id+'.png');
+            const blobStream = blob.createWriteStream({
+              resumable: false
+            })
+            blobStream.on('finish', () => {
+              const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+              
+              resolve(
+                  res.status(200).json({
+                      message: "File uploaded",
+                      publicUrl
+                  })
+              )
+            })
+            .on('error', () => {
+              reject(`Unable to upload image, something went wrong`)
+            })
+            .end(buffer)
+          })
     }
 }

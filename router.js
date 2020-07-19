@@ -2,7 +2,17 @@ const express= require('express');
 
 const authMiddleware = require('./src/middlewares/auth');
 
+const multer = require('multer');
 
+const multerMid = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 5 * 1024 * 1024,
+    },
+  });
+
+
+ 
 const routes = express.Router();
 
 const UserController = require('./src/controllers/UserController');
@@ -29,6 +39,9 @@ routes.get('/users/:user_id/anamnesis', AnamnesisController.index);
 routes.get('/anamnesis/:anamnesis_id', AnamnesisController.get);
 routes.post('/users/:user_id/anamnesis', AnamnesisController.store);
 routes.put('/anamnesis/:anamnesis_id', AnamnesisController.edit);
+
+routes.use(multerMid.single('file'));
+routes.post('/users/:user_id/upload', UserController.upload);
 
 
 module.exports= routes;
