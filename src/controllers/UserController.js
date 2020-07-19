@@ -83,17 +83,19 @@ module.exports = {
 
 
 
-        new Promise((resolve, reject) => {
+        new Promise(async (resolve, reject) => {
             
-          
+            const user = await User.findByPk(user_id);
             const blob = bucket.file('profile-'+user_id+'.png');
             const blobStream = blob.createWriteStream({
               resumable: false
             })
-            blobStream.on('finish', () => {
+            blobStream.on('finish', async () => {
               const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-              
+              user.profile_img=publicUrl
+                await user.save();
               resolve(
+                    
                   res.status(200).json({
                       message: "File uploaded",
                       publicUrl
