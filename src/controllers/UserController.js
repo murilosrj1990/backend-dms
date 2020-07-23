@@ -71,7 +71,7 @@ module.exports = {
     async upload(req,res,next){
 
         const { user_id } = req.params;
-        console.log(req.file);
+        console.log(req.file+", User-Id: "+user_id);
         const file = req.file;
         const {buffer} = file;
         
