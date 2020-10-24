@@ -10,7 +10,7 @@ const cors = require('cors');
 const routes = require('./router');
 
 const app = express();
-
+    
 require('./src/database');
 
 app.disable('x-powered-by');
@@ -19,4 +19,4 @@ app.use(cors());
 app.use(routes);
 
 
-app.listen(process.env.API_PORT);
+app.listen(process.env.API_PORT || process.env.PORT);
