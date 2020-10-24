@@ -19,4 +19,4 @@ app.use(cors());
 app.use(routes);
 
 
-app.listen(process.env.API_PORT || process.env.PORT);
+app.listen(process.env.PORT);
