@@ -8,7 +8,7 @@ const Anamnesis = require('../models/Anamnesis');
 
 console.log(dbConfig);
 
-const connection = new Sequelize(dbConfig);
+const connection = new Sequelize(process.env.DATABASE_URL,dbConfig);
 
 User.init(connection);
 Budget.init(connection);
