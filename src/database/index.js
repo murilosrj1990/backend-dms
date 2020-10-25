@@ -7,7 +7,7 @@ const Procedure =require('../models/Procedure');
 const Anamnesis = require('../models/Anamnesis');
 
 
-const connection = new Sequelize(dbConfig);
+const connection = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL,dbConfig);
 
 User.init(connection);
 Budget.init(connection);

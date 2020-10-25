@@ -8,7 +8,6 @@ module.exports = {
         ssl: {
             rejectUnauthorized: false
         }
-        
     },
     define: {
         timestamps: true,
