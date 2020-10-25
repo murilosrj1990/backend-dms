@@ -6,6 +6,7 @@ const Budget = require('../models/Budget');
 const Procedure =require('../models/Procedure');
 const Anamnesis = require('../models/Anamnesis');
 
+console.log(dbConfig);
 
 const connection = new Sequelize(dbConfig);
 
