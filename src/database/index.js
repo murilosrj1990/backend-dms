@@ -8,7 +8,7 @@ const Anamnesis = require('../models/Anamnesis');
 
 console.log(dbConfig);
 
-const connection = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL,dbConfig);
+const connection = new Sequelize(dbConfig);
 
 User.init(connection);
 Budget.init(connection);
